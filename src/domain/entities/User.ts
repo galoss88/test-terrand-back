@@ -1,6 +1,6 @@
 export class User {
   constructor(
-    public readonly id: string,
+    public readonly id: string | null,
     public readonly name: string,
     public readonly passwordHash: string,
     public readonly email: string
@@ -12,12 +12,12 @@ export class User {
     passwordHash,
     email,
   }: {
-    id: string;
+    id?: string;
     name: string;
     passwordHash: string;
     email: string;
   }) {
-    return new User(id, name, passwordHash, email);
+    return new User(id ?? null, name, passwordHash, email);
   }
 
   setName(name: string) {

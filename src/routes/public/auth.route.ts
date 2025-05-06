@@ -5,6 +5,6 @@ import containerDependencies from "../../containerDependencies";
 const router = Router();
 
 router.post("/login", containerDependencies.controllers.auth?.login);
-// router.post("/register", ctrl.);
+router.post("/register", containerDependencies.controllers.auth?.register);
 
 export default router;

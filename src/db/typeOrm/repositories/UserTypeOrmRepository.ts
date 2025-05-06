@@ -46,7 +46,7 @@ export default class UserTypeOrmRepository implements IUserRepository {
 
   async save(user: UserDomain): Promise<UserDomain> {
     try {
-      // Convertir la entidad de dominio a una entidad de persistencia
+      // Convertir la entidad de dominio a una entidad de db
       const userEntity = UserEntity.fromDomain(user);
 
       // Guardar la entidad

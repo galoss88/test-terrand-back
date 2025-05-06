@@ -1,7 +1,7 @@
 import { Router } from "express";
-import recipesRoutes from "./recipes.route";
+import recipesRoutes from "./private/recipes.route";
 const router = Router();
 
-router.use("/recipes", recipesRoutes);
+router.use("/private", recipesRoutes);
 
 export default router;

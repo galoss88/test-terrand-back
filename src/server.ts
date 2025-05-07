@@ -3,6 +3,13 @@ import express from "express";
 import { AppDataSource } from "./db/typeOrm/config";
 import routesApp from "./routes/index.route";
 import { registerRoute } from "./utils";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// ---------------------------------------------------------------
+// Servidor
+// ---------------------------------------------------------------
 
 const app = express();
 // ---------------------------------------------------------------

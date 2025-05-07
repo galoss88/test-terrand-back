@@ -64,4 +64,5 @@ function initializeContainer(): DependencyContainer {
 
 // Inicializar y exportar el contenedor
 const containerDependencies = initializeContainer();
+console.log('containerDependencies',containerDependencies)
 export default containerDependencies;

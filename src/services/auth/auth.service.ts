@@ -1,4 +1,3 @@
-// src/services/AuthService.ts
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../../domain/entities/User";
@@ -48,6 +47,11 @@ export class AuthJsonWebTokenService implements IAuthService {
     password: string;
     name: string;
   }): Promise<User> {
+    const existingUser = await this.userRepo.findByEmail(email);
+    if (existingUser) {
+      throw new Error("El email ya está registrado");
+    }
+
     //----------------------------------
     //Hash contraseña
     //----------------------------------
@@ -58,7 +62,7 @@ export class AuthJsonWebTokenService implements IAuthService {
       email,
       passwordHash: passwordHash,
       name,
-      id: "1",
+      id: crypto.randomUUID(),
     });
 
     this.userRepo.save(user);

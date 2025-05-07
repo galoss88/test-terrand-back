@@ -1,7 +1,16 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
+import { RecipeDomain } from "../../../domain/entities/Recipe";
+import { UserEntity } from "./User.entity";
 
 @Entity("recipes")
-export class Recipe extends BaseEntity {
+export class RecipeEntity extends BaseEntity {
   @PrimaryColumn()
   id: number;
 
@@ -21,4 +30,31 @@ export class Recipe extends BaseEntity {
 
   @Column("text", { array: true })
   instructions: string[];
+
+  //Relacion con user, muchos a uno
+  @ManyToOne(() => UserEntity, (user) => user.recipes)
+  @JoinColumn({ name: "userId" })
+  user: UserEntity;
+
+  toDomain(): RecipeDomain {
+    const recipeDomain = RecipeDomain.create({
+      id: this.id,
+      description: this.description,
+      image: this.imageUrl,
+      ingredients: this.ingredients,
+      instructions: this.instructions,
+      title: this.title,
+    });
+
+    return recipeDomain;
+  }
+
+  fromDomain(recipe: RecipeDomain): RecipeEntity {
+    const recipeEntity = new RecipeEntity();
+    recipeEntity.description = recipe.description;
+    recipeEntity.imageUrl = recipe.image;
+    recipeEntity.ingredients = recipe.ingredients;
+    recipeEntity.instructions = recipe.instructions;
+    return recipeEntity;
+  }
 }

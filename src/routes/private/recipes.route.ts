@@ -1,8 +1,11 @@
 import { Router } from "express";
+import containerDependencies from "../../containerDependencies";
 
 const router = Router();
 //Obtener todas las recetas de un usuario
-router.get("/", (req, res) => {});
+router.get("/", (req, res, next) => {
+  containerDependencies.controllers.recipe.getRecipesById(req, res, next);
+});
 //Obtener detalle de una receta
 router.get("/:id", (req, res) => {});
 //Crear una receta a un usuario.

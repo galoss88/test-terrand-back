@@ -1,9 +1,9 @@
 import cors from "cors";
-import express from "express";
+import dotenv from "dotenv";
+import express, { NextFunction, Request, Response } from "express";
 import { AppDataSource } from "./db/typeOrm/config";
 import routesApp from "./routes/index.route";
 import { registerRoute } from "./utils";
-import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -36,6 +36,21 @@ app.use(express.json());
 
 registerRoute({ app, path: "/api/v1", router: routesApp });
 
+// ---------------------------------------------------------------
+// Manejador errores global
+// ---------------------------------------------------------------
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+
+  const status = err.status || err.statusCode || 500;
+  const message = err.message || "Error interno del servidor";
+
+  res.status(status).json({
+    success: false,
+    message,
+  });
+});
 // ---------------------------------------------------------------
 // Inicialización de la base de datos
 // ---------------------------------------------------------------

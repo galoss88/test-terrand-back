@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Recipe, UserEntity } from "./entities";
+import { RecipeEntity, UserEntity } from "./entities";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
   database: "terrand_db",
   synchronize: true,
   logging: false,
-  entities: [UserEntity, Recipe],
+  entities: [UserEntity, RecipeEntity],
   subscribers: [],
   migrations: [],
   // logger: "simple-console",

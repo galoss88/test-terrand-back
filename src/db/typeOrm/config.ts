@@ -6,6 +6,7 @@ import { RecipeEntity, UserEntity } from "./entities";
 // Cargar variables de entorno
 dotenv.config();
 
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL,

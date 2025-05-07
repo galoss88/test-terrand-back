@@ -58,8 +58,8 @@ AppDataSource.initialize()
   .then(() => {
     console.log("✅ Base de datos conectada");
 
-    app.listen(3003, () => {
-      console.log("🚀 Servidor iniciado en http://localhost:3003");
+    app.listen(process.env.PORT, () => {
+      console.log(`🚀 Servidor iniciado en http://localhost:${process.env.PORT}`);
     });
   })
   .catch((err) => {

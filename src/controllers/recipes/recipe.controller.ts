@@ -32,4 +32,14 @@ export class RecipeController implements IRecipeController {
       next(e);
     }
   }
+
+  public async getDetail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const idRecipe = req.params.id;
+      const recipeDetail = await this.recipeService.getDetail(idRecipe);
+      res.status(200).json(recipeDetail);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

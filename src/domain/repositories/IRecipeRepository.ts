@@ -6,7 +6,7 @@ export interface IRecipeRepository {
    * @param userId - Identificador del usuario.
    * @returns Arreglo de dominios de receta o null si no hay resultados.
    */
-  
+
   getByUserId(id: string): Promise<RecipeDomain[] | null>;
   /**
    * Crea y persiste una nueva receta en la base de datos.
@@ -14,4 +14,10 @@ export interface IRecipeRepository {
    * @returns El dominio de receta con el id asignado.
    */
   create(recipe: RecipeDomain): Promise<RecipeDomain | null>;
+  /**
+   * Busca una receta en particular, por id.
+   * @param id - Id de la receta a buscar.
+   * @returns Retorna dominio de receta.
+   */
+  getById(id: string): Promise<RecipeDomain | null>;
 }

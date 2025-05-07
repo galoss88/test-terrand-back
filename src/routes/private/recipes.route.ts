@@ -11,7 +11,9 @@ router.post("/", (req, res, next) => {
   containerDependencies.controllers.recipe.create(req, res, next);
 });
 //Obtener detalle de una receta
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res, next) => {
+  containerDependencies.controllers.recipe.getDetail(req, res, next);
+});
 //Eliminar una receta
 router.delete("/:idRecipe", (req, res) => {});
 //Actualizar una receta

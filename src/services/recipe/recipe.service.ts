@@ -37,4 +37,12 @@ export default class RecipeService implements IRecipeService {
     }
     return created;
   }
+
+  public async getDetail(idRecipe: string): Promise<RecipeDomain | null> {
+    const detailRecipe = await this.recipeRepository.getById(idRecipe);
+    if (!detailRecipe) {
+      throw new Error("No se encontró la receta.");
+    }
+    return detailRecipe;
+  }
 }

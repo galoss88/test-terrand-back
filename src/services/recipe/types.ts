@@ -10,4 +10,5 @@ export interface IBodyCreate {
 export interface IRecipeService {
   getAllById(idUser: string): Promise<RecipeDomain[] | null>;
   create(arg0: IBodyCreate): Promise<RecipeDomain | null>;
+  getDetail(idRecipe: string): Promise<RecipeDomain | null>;
 }

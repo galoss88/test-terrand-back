@@ -11,6 +11,18 @@ export class RecipeTypeOrmRepository implements IRecipeRepository {
   constructor(private dataSource: DataSource) {
     this.recipeEntityRepository = this.dataSource.getRepository(RecipeEntity);
   }
+  public async getById(id: string): Promise<RecipeDomain | null> {
+    const recipe = await this.recipeEntityRepository.findOne({
+      where: { id: Number(id) },
+      relations: { user: true },
+    });
+
+    if (!recipe) return null;
+    
+    const recipeDomain = recipe?.toDomain();
+
+    return recipeDomain;
+  }
 
   public async getByUserId(id: string): Promise<RecipeDomain[] | null> {
     try {

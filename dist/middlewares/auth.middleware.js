@@ -7,7 +7,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authMiddleware = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
-        console.log("req header", req.headers);
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             res.status(401).json({
                 success: false,

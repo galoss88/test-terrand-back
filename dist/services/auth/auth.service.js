@@ -29,7 +29,7 @@ class AuthJsonWebTokenService {
             throw new Error("JWT_SECRET no configurado");
         }
         const token = jsonwebtoken_1.default.sign(payload, secret, {
-            expiresIn: "1h",
+            expiresIn: "7d",
         });
         return token;
     }

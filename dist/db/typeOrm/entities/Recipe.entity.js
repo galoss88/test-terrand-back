@@ -23,6 +23,7 @@ let RecipeEntity = RecipeEntity_1 = class RecipeEntity extends typeorm_1.BaseEnt
             ingredients: this.ingredients,
             instructions: this.instructions,
             title: this.title,
+            userId: this.user?.id ?? null,
         });
         return recipeDomain;
     }
@@ -32,12 +33,21 @@ let RecipeEntity = RecipeEntity_1 = class RecipeEntity extends typeorm_1.BaseEnt
         recipeEntity.imageUrl = recipe.image;
         recipeEntity.ingredients = recipe.ingredients;
         recipeEntity.instructions = recipe.instructions;
+        recipeEntity.title = recipe.title;
+        // recipeEntity.user = recipe.userId ?? null;
+        recipeEntity.title = recipe.title;
+        const userStub = new User_entity_1.UserEntity();
+        userStub.id =
+            typeof recipe.userId === "string"
+                ? recipe.userId
+                : recipe.userId.toString();
+        recipeEntity.user = userStub;
         return recipeEntity;
     }
 };
 exports.RecipeEntity = RecipeEntity;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], RecipeEntity.prototype, "id", void 0);
 __decorate([

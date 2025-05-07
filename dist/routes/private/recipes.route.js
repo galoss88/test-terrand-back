@@ -10,12 +10,18 @@ const router = (0, express_1.Router)();
 router.get("/", (req, res, next) => {
     containerDependencies_1.default.controllers.recipe.getRecipesById(req, res, next);
 });
-//Obtener detalle de una receta
-router.get("/:id", (req, res) => { });
 //Crear una receta a un usuario.
-router.post("/:idUser", (req, res) => { });
+router.post("/", (req, res, next) => {
+    containerDependencies_1.default.controllers.recipe.create(req, res, next);
+});
+//Obtener detalle de una receta
+router.get("/:id", (req, res, next) => {
+    containerDependencies_1.default.controllers.recipe.getDetail(req, res, next);
+});
 //Eliminar una receta
 router.delete("/:idRecipe", (req, res) => { });
 //Actualizar una receta
-router.put("/:idRecipe", (req, res) => { });
+router.put("/", (req, res, next) => {
+    containerDependencies_1.default.controllers.recipe.update(req, res, next);
+});
 exports.default = router;

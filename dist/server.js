@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const config_1 = require("./db/typeOrm/config");
 const index_route_1 = __importDefault(require("./routes/index.route"));
 const utils_1 = require("./utils");
-const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 // ---------------------------------------------------------------
 // Servidor
@@ -32,13 +32,25 @@ app.use(express_1.default.json());
 // ---------------------------------------------------------------
 (0, utils_1.registerRoute)({ app, path: "/api/v1", router: index_route_1.default });
 // ---------------------------------------------------------------
+// Manejador errores global
+// ---------------------------------------------------------------
+app.use((err, req, res, next) => {
+    console.error(err);
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Error interno del servidor";
+    res.status(status).json({
+        success: false,
+        message,
+    });
+});
+// ---------------------------------------------------------------
 // Inicialización de la base de datos
 // ---------------------------------------------------------------
 config_1.AppDataSource.initialize()
     .then(() => {
     console.log("✅ Base de datos conectada");
-    app.listen(3003, () => {
-        console.log("🚀 Servidor iniciado en http://localhost:3003");
+    app.listen(process.env.PORT, () => {
+        console.log(`🚀 Servidor iniciado en http://localhost:${process.env.PORT}`);
     });
 })
     .catch((err) => {

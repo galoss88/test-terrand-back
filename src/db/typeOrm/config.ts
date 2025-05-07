@@ -5,7 +5,18 @@ import { RecipeEntity, UserEntity } from "./entities";
 
 // Cargar variables de entorno
 dotenv.config();
-
+// —— DEBUG: comprobar variables —— 
+console.log("╔═🛠️  ENV VARIABLES 🛠️═╗");
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_PORT:", process.env.DB_PORT);
+console.log("DB_USERNAME:", process.env.DB_USERNAME);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "****" : undefined);
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_SYNC:", process.env.DB_SYNC);
+console.log("DB_LOGGING:", process.env.DB_LOGGING);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("PORT:", process.env.PORT);
+console.log("═══════════════════════");
 export const AppDataSource = new DataSource({
   type:  "postgres",
   host: process.env.DB_HOST || "localhost",

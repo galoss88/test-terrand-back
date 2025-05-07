@@ -1,6 +1,7 @@
 export class RecipeDomain {
   constructor(
-    public readonly id: number | string,
+    public readonly id: number | string | null,
+    public readonly userId: number | string,
     public readonly title: string,
     public readonly description: string,
     public readonly ingredients: string[],
@@ -8,28 +9,23 @@ export class RecipeDomain {
     public readonly image: string
   ) {}
 
-  public static create({
-    id,
-    title,
-    description,
-    ingredients,
-    instructions,
-    image,
-  }: {
-    id: number | string;
+  public static create(data: {
+    id?: number | string;
+    userId: number | string;
     title: string;
     description: string;
     ingredients: string[];
     instructions: string[];
     image: string;
-  }) {
+  }): RecipeDomain {
     return new RecipeDomain(
-      id,
-      title,
-      description,
-      ingredients,
-      instructions,
-      image
+      data.id ?? null,
+      data.userId,
+      data.title,
+      data.description,
+      data.ingredients,
+      data.instructions,
+      data.image
     );
   }
 }

@@ -6,10 +6,12 @@ const router = Router();
 router.get("/", (req, res, next) => {
   containerDependencies.controllers.recipe.getRecipesById(req, res, next);
 });
+//Crear una receta a un usuario.
+router.post("/", (req, res, next) => {
+  containerDependencies.controllers.recipe.create(req, res, next);
+});
 //Obtener detalle de una receta
 router.get("/:id", (req, res) => {});
-//Crear una receta a un usuario.
-router.post("/:idUser", (req, res) => {});
 //Eliminar una receta
 router.delete("/:idRecipe", (req, res) => {});
 //Actualizar una receta

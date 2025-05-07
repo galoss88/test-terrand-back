@@ -4,14 +4,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { RecipeDomain } from "../../../domain/entities/Recipe";
 import { UserEntity } from "./User.entity";
 
 @Entity("recipes")
 export class RecipeEntity extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
@@ -44,6 +44,7 @@ export class RecipeEntity extends BaseEntity {
       ingredients: this.ingredients,
       instructions: this.instructions,
       title: this.title,
+      userId: this.user?.id ?? null,
     });
 
     return recipeDomain;
@@ -55,6 +56,16 @@ export class RecipeEntity extends BaseEntity {
     recipeEntity.imageUrl = recipe.image;
     recipeEntity.ingredients = recipe.ingredients;
     recipeEntity.instructions = recipe.instructions;
+    recipeEntity.title = recipe.title;
+    // recipeEntity.user = recipe.userId ?? null;
+    recipeEntity.title = recipe.title;
+    const userStub = new UserEntity();
+    userStub.id =
+      typeof recipe.userId === "string"
+        ? recipe.userId
+        : recipe.userId.toString();
+    recipeEntity.user = userStub;
+
     return recipeEntity;
   }
 }

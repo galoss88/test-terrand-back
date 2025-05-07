@@ -15,7 +15,6 @@ declare global {
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization;
-    console.log("req header", req.headers);
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       res.status(401).json({
         success: false,

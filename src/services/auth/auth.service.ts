@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { User } from "../../domain/entities/User";
 import { IUserRepository } from "../../domain/repositories/IUserRepository";
 import { IAuthService } from "./types";
-
 export class AuthJsonWebTokenService implements IAuthService {
   private userRepo: IUserRepository;
 

@@ -1,7 +1,9 @@
 import { Router } from "express";
-import recipesRoutes from "./private/recipes.route";
+import privateRoutes from "./private/index.route";
+import publicRoutes from "./public/index.route";
 const router = Router();
 
-router.use("/private", recipesRoutes);
+router.use("/public", publicRoutes);
+router.use("/private", privateRoutes);
 
 export default router;

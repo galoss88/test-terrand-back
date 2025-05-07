@@ -1,8 +1,25 @@
+import cors from "cors";
 import express from "express";
 import { AppDataSource } from "./db/typeOrm/config";
 import routesApp from "./routes/index.route";
 import { registerRoute } from "./utils";
+
 const app = express();
+// ---------------------------------------------------------------
+// Cors
+// ---------------------------------------------------------------
+
+app.use(
+  cors({
+    origin: "*", // o '*' para permitir todos
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+// ---------------------------------------------------------------
+// Middlewares de rutas
+// ---------------------------------------------------------------
 
 app.use(express.json());
 

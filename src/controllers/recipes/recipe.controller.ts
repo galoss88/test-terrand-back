@@ -42,4 +42,14 @@ export class RecipeController implements IRecipeController {
       next(e);
     }
   }
+
+  public async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body;
+      const recipeUpdated = await this.recipeService.update(body);
+      res.status(200).json(recipeUpdated);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

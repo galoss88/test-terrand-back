@@ -18,7 +18,7 @@ export class RecipeTypeOrmRepository implements IRecipeRepository {
     });
 
     if (!recipe) return null;
-    
+
     const recipeDomain = recipe?.toDomain();
 
     return recipeDomain;
@@ -66,6 +66,38 @@ export class RecipeTypeOrmRepository implements IRecipeRepository {
       return savedEntity.toDomain();
     } catch (error) {
       console.error("Error creating recipe:", error);
+      throw error;
+    }
+  }
+
+  public async update(
+    id: string,
+    recipeDomain: RecipeDomain
+  ): Promise<RecipeDomain | null> {
+    try {
+      const existingRecipe = await this.recipeEntityRepository.findOne({
+        where: { id: Number(id) },
+        relations: { user: true },
+      });
+
+      if (!existingRecipe) {
+        return null;
+      }
+
+      const recipeEntity = new RecipeEntity();
+      const toUpdateEntity = recipeEntity.fromDomain(recipeDomain);
+
+      toUpdateEntity.id = Number(id);
+
+      toUpdateEntity.user = existingRecipe.user;
+
+      const updatedEntity = await this.recipeEntityRepository.save(
+        toUpdateEntity
+      );
+
+      return updatedEntity.toDomain();
+    } catch (error) {
+      console.error("Error updating recipe:", error);
       throw error;
     }
   }

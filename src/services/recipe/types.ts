@@ -7,8 +7,19 @@ export interface IBodyCreate {
   title: string;
   userId: string;
 }
+export interface IBodyUpdate extends IBodyCreate {
+  id: string;
+}
 export interface IRecipeService {
   getAllById(idUser: string): Promise<RecipeDomain[] | null>;
   create(arg0: IBodyCreate): Promise<RecipeDomain | null>;
   getDetail(idRecipe: string): Promise<RecipeDomain | null>;
+  update({
+    description,
+    instructions,
+    ingredients,
+    image,
+    title,
+    id,
+  }: IBodyUpdate): Promise<RecipeDomain>;
 }

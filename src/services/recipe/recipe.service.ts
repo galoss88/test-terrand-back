@@ -1,6 +1,6 @@
 import { RecipeDomain } from "../../domain/entities/Recipe";
 import { IRecipeRepository } from "../../domain/repositories/IRecipeRepository";
-import { IBodyCreate, IRecipeService } from "./types";
+import { IBodyCreate, IBodyUpdate, IRecipeService } from "./types";
 
 export default class RecipeService implements IRecipeService {
   constructor(private readonly recipeRepository: IRecipeRepository) {}
@@ -44,5 +44,36 @@ export default class RecipeService implements IRecipeService {
       throw new Error("No se encontró la receta.");
     }
     return detailRecipe;
+  }
+
+  public async update({
+    description,
+    instructions,
+    ingredients,
+    image,
+    title,
+    id,
+  }: IBodyUpdate): Promise<RecipeDomain> {
+    const idRecipe = id;
+    const existingRecipe = await this.recipeRepository.getById(idRecipe);
+    if (!existingRecipe) {
+      throw new Error("No se encontró la receta para actualizar");
+    }
+
+    const updatedRecipe = RecipeDomain.create({
+      title: title ?? existingRecipe.title,
+      description: description ?? existingRecipe.description,
+      image: image ?? existingRecipe.image,
+      ingredients: ingredients ?? existingRecipe.ingredients,
+      instructions: instructions ?? existingRecipe.instructions,
+      userId: existingRecipe.userId,
+    });
+
+    const updated = await this.recipeRepository.update(idRecipe, updatedRecipe);
+    if (!updated) {
+      throw new Error("Falló la actualización de la receta");
+    }
+
+    return updated;
   }
 }

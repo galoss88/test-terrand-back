@@ -8,4 +8,5 @@ export interface IRecipeController {
   ): Promise<void>;
   create(req: Request, res: Response, next: NextFunction): Promise<void>;
   getDetail(req: Request, res: Response, next: NextFunction): Promise<void>;
+  update(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

@@ -20,4 +20,9 @@ export interface IRecipeRepository {
    * @returns Retorna dominio de receta.
    */
   getById(id: string): Promise<RecipeDomain | null>;
+
+  update(
+    id: string,
+    recipeDomain: RecipeDomain
+  ): Promise<RecipeDomain | null> 
 }

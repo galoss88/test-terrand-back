@@ -17,6 +17,8 @@ router.get("/:id", (req, res, next) => {
 //Eliminar una receta
 router.delete("/:idRecipe", (req, res) => {});
 //Actualizar una receta
-router.put("/:idRecipe", (req, res) => {});
+router.put("/", (req, res, next) => {
+  containerDependencies.controllers.recipe.update(req, res, next);
+});
 
 export default router;

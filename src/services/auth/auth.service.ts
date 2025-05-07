@@ -32,7 +32,7 @@ export class AuthJsonWebTokenService implements IAuthService {
     }
 
     const token = jwt.sign(payload, secret, {
-      expiresIn: "1h",
+      expiresIn: "7d",
     });
 
     return token;

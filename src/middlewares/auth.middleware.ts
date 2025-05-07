@@ -44,14 +44,14 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Token inválido o expirado",
       });
     }
 
     console.error("Error en middlware de autenticación:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error interno del servidor",
     });

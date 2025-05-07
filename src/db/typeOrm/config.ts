@@ -1,23 +1,45 @@
 import dotenv from "dotenv";
 import "reflect-metadata";
-import { DataSource } from "typeorm";
+import { DataSource, DataSourceOptions } from "typeorm";
 import { RecipeEntity, UserEntity } from "./entities";
 
-// Cargar variables de entorno
 dotenv.config();
 
+const isDev = process.env.NODE_ENV === "development";
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
-  url: process.env.DATABASE_URL,
-  // host: process.env.DB_HOST || "localhost",
-  // port: parseInt(process.env.DB_PORT || "5432"),
-  // username: process.env.DB_USERNAME || "postgres",
-  // password: process.env.DB_PASSWORD || "78914526",
-  // database: process.env.DB_NAME || "terrand_db",
+const common: Pick<
+  DataSourceOptions,
+  "synchronize" | "logging" | "entities" | "subscribers" | "migrations"
+> = {
   synchronize: process.env.DB_SYNC === "true",
   logging: process.env.DB_LOGGING === "true",
   entities: [UserEntity, RecipeEntity],
   subscribers: [],
   migrations: [],
-});
+};
+
+let dataSourceOptions: DataSourceOptions;
+
+if (isDev) {
+  dataSourceOptions = {
+    type: "postgres",
+    host: process.env.DB_HOST!,
+    port: parseInt(process.env.DB_PORT!, 10),
+    username: process.env.DB_USERNAME!,
+    password: process.env.DB_PASSWORD!,
+    database: process.env.DB_NAME!,
+    ...common,
+  };
+} else {
+  if (!process.env.DATABASE_URL) {
+    console.error("❌ No existe DATABASE_URL en el entorno");
+    process.exit(1);
+  }
+  dataSourceOptions = {
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    ...common,
+  };
+}
+
+export const AppDataSource = new DataSource(dataSourceOptions);

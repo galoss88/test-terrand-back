@@ -21,10 +21,11 @@ console.log("DB_SYNC:", process.env.DB_SYNC);
 console.log("DB_LOGGING:", process.env.DB_LOGGING);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("PORT:", process.env.PORT);
+console.log("database name", process.env.DATABASE_URL);
 console.log("═══════════════════════");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    url: process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL || "postgresql://postgres:qLAMRAuuwEaYZvWbGxusLnxekcPyhQTR@postgres.railway.internal:5432/railway",
     // host: process.env.DB_HOST || "localhost",
     // port: parseInt(process.env.DB_PORT || "5432"),
     // username: process.env.DB_USERNAME || "postgres",
